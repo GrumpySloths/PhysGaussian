@@ -354,6 +354,7 @@ class MPM_Simulator_WARP:
             self.mpm_model.grid_v_damping_scale = kwargs["grid_v_damping_scale"]
 
         if "additional_material_params" in kwargs:
+            print("Applying additional material parameters")
             for params in kwargs["additional_material_params"]:
                 param_modifier = MaterialParamsModifier()
                 param_modifier.point = wp.vec3(params["point"])

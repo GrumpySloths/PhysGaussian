@@ -37,7 +37,9 @@ from utils.transformation_utils import *
 from utils.camera_view_utils import *
 from utils.render_utils import *
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+import random
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 wp.init()
 wp.config.verify_cuda = True
@@ -86,8 +88,11 @@ if __name__ == "__main__":
         AssertionError("Model path does not exist!")
     if not os.path.exists(args.config):
         AssertionError("Scene config does not exist!")
-    if args.output_path is not None and not os.path.exists(args.output_path):
-        os.makedirs(args.output_path)
+    if args.output_path is not None :
+        #为output_path 添加额外的随机数编号使得每次的outputpath不同
+        args.output_path = os.path.join(args.output_path, str(random.randint(0, 100000)))
+        if not os.path.exists(args.output_path):
+            os.makedirs(args.output_path)
 
     # load scene config
     print("Loading scene config...")
@@ -98,6 +103,22 @@ if __name__ == "__main__":
         preprocessing_params,
         camera_params,
     ) = decode_param_json(args.config)
+
+    #将对应的配置文件信息写入到output_path中
+    if args.output_path is not None:
+        print("Writing scene config to output path {}...".format(args.output_path))
+        with open(os.path.join(args.output_path, "scene_config.json"), "w") as f:
+            json.dump(
+                {
+                    "material_params": material_params,
+                    "bc_params": bc_params,
+                    "time_params": time_params,
+                    "preprocessing_params": preprocessing_params,
+                    "camera_params": camera_params,
+                },
+                f,
+                indent=4,
+            )
 
     # load gaussians
     print("Loading gaussians...")
