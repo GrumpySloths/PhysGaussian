@@ -1,23 +1,33 @@
 #!/bin/bash
 
+export DEBUG_PRINT=false
 # Define arrays for model_path, output_path, and config
 model_paths=(
     "./model/ficus_whitebg-trained/"
     "./model/wolf_whitebg-trained/"
     "./model/vasedeck_whitebg-trained"
     "./model/pillow2sofa_whitebg-trained"
+    "./model/ikun_rgba_whitebg-trained"
+    "./model/ficus_simple_whitebg-trained"
+    "./model/paladin_whitebg-trained"
 )
 output_paths=(
     "output_ficus"
     "output_wolf"
     "output_vasedeck"
     "output_pillow2sofa"
+    "output_ikun_rgba"
+    "output_ficus_simple"
+    "output_paladin"
 )
 configs=(
     "./config/ficus_config.json"
     "./config/wolf_config.json"
     "./config/vasedeck_config.json"
     "./config/pillow2sofa_config.json"
+    "./config/ikun_rgba_config.json"
+    "./config/ficus_simple_config.json"
+    "./config/paladin_config.json"
 )
 
 # Check if an argument is provided
@@ -46,4 +56,5 @@ echo "Config: ${configs[$index]}"
 echo ""
 
 # Run the python script with the selected configuration
-python gs_simulation.py --model_path "${model_paths[$index]}" --output_path "${output_paths[$index]}" --config "${configs[$index]}" --render_img --compile_video --white_bg
+python gs_simulation.py --model_path "${model_paths[$index]}" --output_path "${output_paths[$index]}" --config "${configs[$index]}" \
+            --render_img --compile_video --white_bg  

@@ -8,6 +8,7 @@
     "nu": 0.4,
     "E": 2e6,
     "material": "jelly",
+    "sh_degree":3,
     "density": 200,
     "g": [0,0,-2.0],
     "grid_v_damping_scale": 0.9999,

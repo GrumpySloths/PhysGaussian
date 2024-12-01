@@ -1,13 +1,16 @@
 import torch
 import numpy as np
 from utils.camera_view_utils import *
+from utils.debug import debug_print
 
 
 def transform2origin(position_tensor):
     min_pos = torch.min(position_tensor, 0)[0]
     max_pos = torch.max(position_tensor, 0)[0]
+    debug_print("min_pos:{} max_pos:{}".format(min_pos, max_pos))
     max_diff = torch.max(max_pos - min_pos)
     original_mean_pos = (min_pos + max_pos) / 2.0
+    debug_print("original_mean_pos:{} max_diff:{}".format(original_mean_pos, max_diff))
     scale = 1.0 / max_diff
     original_mean_pos = original_mean_pos.to(device="cuda")
     scale = scale.to(device="cuda")
@@ -161,6 +164,10 @@ def get_center_view_worldspace_and_observant_coordinate(
     vertical, h1, h2 = generate_local_coord(
         np.squeeze(world_space_vertical_axis.clone().detach().cpu().numpy(), 0)
     )
+
+    debug_print("vertical:{} h1:{} h2:{}".format(vertical, h1, h2))
     observant_coordinates = np.column_stack((h1, h2, vertical))
+    debug_print("observant_coordinates:")
+    debug_print(observant_coordinates)
 
     return viewpoint_center_worldspace, observant_coordinates

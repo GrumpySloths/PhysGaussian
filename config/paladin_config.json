@@ -8,9 +8,10 @@
     "nu": 0.4,
     "E": 2e6,
     "material": "jelly",
+    "sh_degree":3,
     "density": 200,
     "g": [0,0,-2.0],
-    "grid_v_damping_scale": 0.9999,
+    "grid_v_damping_scale": 1.0,
     "rpic_damping": 0.0,
     "boundary_conditions": [
         {
@@ -37,7 +38,7 @@
         {
             "type": "particle_impulse",
             "force": [
-                -1.8e-1,
+                -50,
                 0.0,
                 0.0
             ],
@@ -66,7 +67,7 @@
     "mpm_space_viewpoint_center": [0.95,1.07,1],
     "default_camera_index": -1,
     "show_hint": false,
-    "init_azimuthm": -36.7,
+    "init_azimuthm": 40.0,
     "init_elevation": 8.96,
     "init_radius": 4.11,
     "move_camera": true,

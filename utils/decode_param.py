@@ -13,7 +13,12 @@ def decode_param_json(json_file):
         material_params["material"] = sim_params["material"]
     else:
         material_params["material"] = "jelly"
-
+    
+    if "sh_degree" in sim_params.keys():
+        material_params["sh_degree"] = sim_params["sh_degree"]
+    else:
+        material_params["sh_degree"] = 3
+        
     if "grid_lim" in sim_params.keys():
         material_params["grid_lim"] = sim_params["grid_lim"]
     else:

@@ -39,7 +39,7 @@ from utils.render_utils import *
 
 import random
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 wp.init()
 wp.config.verify_cuda = True
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     # load gaussians
     print("Loading gaussians...")
     model_path = args.model_path
-    gaussians = load_checkpoint(model_path)
+    gaussians = load_checkpoint(model_path,material_params["sh_degree"])
     pipeline = PipelineParamsNoparse()
     pipeline.compute_cov3D_python = True
     background = (
