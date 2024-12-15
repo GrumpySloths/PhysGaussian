@@ -10,6 +10,7 @@ model_paths=(
     "./model/ikun_rgba_whitebg-trained"
     "./model/ficus_simple_whitebg-trained"
     "./model/paladin_whitebg-trained"
+    "./model/fox-trained"
 )
 output_paths=(
     "output_ficus"
@@ -19,6 +20,7 @@ output_paths=(
     "output_ikun_rgba"
     "output_ficus_simple"
     "output_paladin"
+    "output_fox"
 )
 configs=(
     "./config/ficus_config.json"
@@ -28,6 +30,7 @@ configs=(
     "./config/ikun_rgba_config.json"
     "./config/ficus_simple_config.json"
     "./config/paladin_config.json"
+    "./config/fox_config.json"
 )
 
 # Check if an argument is provided
@@ -57,4 +60,4 @@ echo ""
 
 # Run the python script with the selected configuration
 python gs_simulation.py --model_path "${model_paths[$index]}" --output_path "${output_paths[$index]}" --config "${configs[$index]}" \
-            --render_img --compile_video --white_bg  
+            --render_img --compile_video   --white_bg --debug

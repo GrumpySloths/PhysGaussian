@@ -8,7 +8,7 @@
     ],
     "substep_dt": 1e-4,
     "frame_dt": 4e-2,
-    "frame_num": 75,
+    "frame_num":75,
     "E": 1e4,
     "nu": 0.3,
     "material": "jelly",
@@ -65,8 +65,8 @@
                 0.2,
                 0.1
             ],
-            "rotation_scale": 1.9,
-            "translation_scale": 0.0,
+            "rotation_scale": 2.4,
+            "translation_scale": 0.4,
             "start_time": 0.0,
             "end_time": 0.3
         },
@@ -147,8 +147,8 @@
             ],
             "velocity": [
                 0.0,
-                0.0,
-                0.0
+                1.0,
+                0.0 
             ],
             "start_time": 0.0,
             "end_time": 100.0

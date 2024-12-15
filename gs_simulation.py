@@ -1,5 +1,3 @@
-import sys
-
 sys.path.append("gaussian-splatting")
 
 import argparse
@@ -39,7 +37,7 @@ from utils.render_utils import *
 
 import random
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 wp.init()
 wp.config.verify_cuda = True
@@ -126,11 +124,16 @@ if __name__ == "__main__":
     gaussians = load_checkpoint(model_path,material_params["sh_degree"])
     pipeline = PipelineParamsNoparse()
     pipeline.compute_cov3D_python = True
-    background = (
-        torch.tensor([1, 1, 1], dtype=torch.float32, device="cuda")
-        if args.white_bg
-        else torch.tensor([0, 0, 0], dtype=torch.float32, device="cuda")
-    )
+    if args.white_bg:
+        background = torch.tensor([1, 1, 1], dtype=torch.float32, device="cuda")
+    else:
+        if os.path.exists("./test.png"):
+            background_img = cv2.imread("./test.png")
+            background_img = cv2.cvtColor(background_img, cv2.COLOR_BGR2RGB)
+            background_img = background_img.astype(np.float32) / 255.0
+            background = torch.tensor(background_img, dtype=torch.float32, device="cuda")
+        else:
+            background = torch.tensor([0, 0, 0], dtype=torch.float32, device="cuda")
 
     # init the scene
     print("Initializing scene and pre-processing...")
@@ -191,6 +194,8 @@ if __name__ == "__main__":
         init_cov = init_cov[mask, :]
         init_opacity = init_opacity[mask, :]
         init_shs = init_shs[mask, :]
+        # 将sim_area中的粒子保存为ply文件，包括pos,cov,opacity,shs
+        
     #相当于将Gaussian Splatting的点云数据重新进行了归一化并将整个空间的中心点设置为(1,1,1)
     transformed_pos, scale_origin, original_mean_pos = transform2origin(rotated_pos)
     transformed_pos = shift2center111(transformed_pos)
@@ -376,7 +381,8 @@ if __name__ == "__main__":
                 shs = torch.cat([shs_render, unselected_shs], dim=0)
 
             colors_precomp = convert_SH(shs, current_camera, gaussians, pos, rot)
-            rendering, raddi = rasterize(
+
+            rendering,raddi = rasterize(
                 means3D=pos,
                 means2D=init_screen_points,
                 shs=None,
@@ -386,6 +392,8 @@ if __name__ == "__main__":
                 rotations=None,
                 cov3D_precomp=cov3D,
             )
+
+            # print("values:   ",values)
             cv2_img = rendering.permute(1, 2, 0).detach().cpu().numpy()
             cv2_img = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
             if height is None or width is None:
@@ -399,6 +407,8 @@ if __name__ == "__main__":
 
     if args.render_img and args.compile_video:
         fps = int(1.0 / time_params["frame_dt"])
+        debug_print("fps:{} height:{} width:{}".format(fps, height, width))
+        debug_print("output_path:{}".format(args.output_path))
         os.system(
             f"ffmpeg -framerate {fps} -i {args.output_path}/%04d.png -c:v libx264 -s {width}x{height} -y -pix_fmt yuv420p {args.output_path}/output.mp4"
         )

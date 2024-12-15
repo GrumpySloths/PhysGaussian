@@ -27,6 +27,8 @@ class Scene:
         :param path: Path to colmap scene main folder.
         """
         self.model_path = args.model_path
+        #添加dataset type
+        self.dataset_type=args.dataset_type
         self.loaded_iter = None
         self.gaussians = gaussians
 
@@ -40,11 +42,22 @@ class Scene:
         self.train_cameras = {}
         self.test_cameras = {}
 
-        if os.path.exists(os.path.join(args.source_path, "sparse")):
+        # if os.path.exists(os.path.join(args.source_path, "sparse")):
+        #     scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval)
+        # elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
+        #     print("Found transforms_train.json file, assuming Blender data set!")
+        #     # scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval)
+        #     scene_info = sceneLoadTypeCallbacks["PhysGaussian"](args.source_path, args.white_background, args.eval)
+        # else:
+        #     assert False, "Could not recognize scene type!"
+        if self.dataset_type=="Colmap":
             scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval)
-        elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
+        elif self.dataset_type=="Blender":
             print("Found transforms_train.json file, assuming Blender data set!")
             scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval)
+        elif self.dataset_type=="PhysGaussian":
+            print("Found transforms_train.json file, assuming PhysGaussian data set!")
+            scene_info = sceneLoadTypeCallbacks["PhysGaussian"](args.source_path, args.white_background, args.eval)
         else:
             assert False, "Could not recognize scene type!"
 

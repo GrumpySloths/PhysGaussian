@@ -109,6 +109,7 @@ def fill_dense_grids(
                     di = ti.random()
                     dj = ti.random()
                     dk = ti.random()
+                    #利用随机数依据网格的坐标生成粒子位置
                     new_particles[index] = ti.Vector([i + di, j + dj, k + dk]) * grid_dx
 
     return new_start_idx
@@ -334,9 +335,11 @@ def fill_particles(
     fill_num = 0
 
     # compute density_field
+    print("compute density field")
     densify_grids(ti_pos, ti_opacity, ti_cov, grid, grid_density, grid_dx)
 
     # fill dense grids
+    print("fill dense grids")
     fill_num = fill_dense_grids(
         grid,
         grid_density,

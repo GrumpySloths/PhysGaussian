@@ -1,0 +1,38 @@
+Selected configuration:
+Model path: ./model/pillow2sofa_whitebg-trained
+Output path: output_pillow2sofa
+Config: ./config/pillow2sofa_config.json
+
+[Taichi] version 1.5.0, llvm 15.0.4, commit 7b885c28, linux, python 3.9.20
+Warp 0.10.1 initialized:
+   CUDA Toolkit: 11.5, Driver: 12.2
+   Devices:
+     "cpu"    | x86_64
+     "cuda:0" | NVIDIA GeForce RTX 4090 (sm_89)
+   Kernel cache: /home/jiahao/.cache/warp/0.10.1
+[Taichi] Starting on arch=cuda
+Loading scene config...
+Writing scene config to output path output_pillow2sofa/42931...
+Loading gaussians...
+opacities shape :  (636507, 1)
+Extra features :  ['f_rest_0', 'f_rest_1', 'f_rest_2', 'f_rest_3', 'f_rest_4', 'f_rest_5', 'f_rest_6', 'f_rest_7', 'f_rest_8', 'f_rest_9', 'f_rest_10', 'f_rest_11', 'f_rest_12', 'f_rest_13', 'f_rest_14', 'f_rest_15', 'f_rest_16', 'f_rest_17', 'f_rest_18', 'f_rest_19', 'f_rest_20', 'f_rest_21', 'f_rest_22', 'f_rest_23', 'f_rest_24', 'f_rest_25', 'f_rest_26', 'f_rest_27', 'f_rest_28', 'f_rest_29', 'f_rest_30', 'f_rest_31', 'f_rest_32', 'f_rest_33', 'f_rest_34', 'f_rest_35', 'f_rest_36', 'f_rest_37', 'f_rest_38', 'f_rest_39', 'f_rest_40', 'f_rest_41', 'f_rest_42', 'f_rest_43', 'f_rest_44']
+Initializing scene and pre-processing...
+write ./log/init_particles.ply
+write ./log/rotated_particles.ply
+write ./log/transformed_particles.ply
+Filling internal particles...
+compute density field
+/home/jiahao/anaconda3/envs/PhysGaussian/lib/python3.9/site-packages/taichi/lang/ast/ast_transformer.py:54: Warning: Casting range_for boundary values from f32 to i32, which may cause numerical issues
+  warnings.warn(
+fill dense grids
+after dense grids:  0
+after internal grids:  71660
+write ./log/filled_particles.ply
+Initializing MPM solver and setting up boundary conditions...
+check *.ply files to see if it's ready for simulation
+Module warp_utils load on device 'cuda:0' took 3.23 ms
+Particles initialized from torch data.
+Total particles:  695984
+Module mpm_utils load on device 'cuda:0' took 221.10 ms
+  0%|                                                                                                                                                                             | 0/200 [00:00<?, ?it/s]Module mpm_solver_warp.mpm_solver_warp load on device 'cuda:0' took 6.10 ms
+  2%|██▍               
